@@ -69,8 +69,8 @@ GRPHQL_GREET := libgreetgraphql.a libgreetschema.a
 # OBJ = nothing.o ./hello/hello.o ./hello/HelloSchema.o ./hello/HelloMock.o ./hello/hellosample.o ./greet/greet.o ./greet/GreetSchema.o ./greet/GreetMock.o  ./greet/greetsample.o cppgraphql.o
 # ENODE = ${NOTH_A} ./hello/hello.node ./hello/hellosample ./greet/greet.node ./greet/greetsample cppgraphql.node
 
-OBJ = nothing.o ./hello/hello.o ./hello/HelloSchema.o ./hello/HelloMock.o ./hello/hellosample.o cppgraphql.o
-ENODE = ${NOTH_A} ./hello/hello.node ./hello/hellosample cppgraphql.node 
+OBJ = nothing.o ${GRPHQL_OBJ} ./hello/hello.o ./hello/HelloSchema.o ./hello/HelloMock.o cppgraphql.o
+ENODE = ${NOTH_A} ./hello/hello.node cppgraphql.node
 
 
 HELLO := ./hello
@@ -90,7 +90,7 @@ clean:
 ./greet/greet.o: ./greet/greet.cpp
 	${CXX} ${CFLAGS} ${CSTAND} '-DNODE_GYP_MODULE_NAME=greet' ${DEFS} ${GYP_CFLAGS} ${INC_NAPI} ${INC_NODE} -c $< -o $@
 
-cppgraphql.o: .cppgraphql.cpp
+cppgraphql.o: cppgraphql.cpp
 	${CXX} ${CFLAGS} ${CSTAND} '-DNODE_GYP_MODULE_NAME=cppgraphql' ${DEFS} ${GYP_CFLAGS} ${INC_NAPI} ${INC_NODE} -c $< -o $@
 
 # ./hello/hello.node: ./src/GraphQLService.o ./hello/HelloSchema.o ./hello/HelloMock.o ./hello/hello.o
@@ -103,7 +103,7 @@ cppgraphql.o: .cppgraphql.cpp
 	${CXX} ${CFLAGS} -shared -Wl,-soname=greet.node -Wl,--start-group ./greet/greet.o ${GRPHQL_GREET} ${GRPHQL_A} -lpthread ${NOTH_A} -Wl,--end-group -o $@
 
 cppgraphql.node: ./cppgraphql.o ${GRPHQL_GREET} ${GRPHQL_A}
-	${CXX} ${CFLAGS} -shared -Wl,-soname=cppgraphql.node -Wl,--start-group cppgraphql.o ${GRPHQL_GREET} ${GRPHQL_A} -lpthread ${NOTH_A} -Wl,--end-group -o $@
+	${CXX} ${CFLAGS} -shared -Wl,-soname=cppgraphql.node -Wl,--start-group cppgraphql.o ${GRPHQL_HELLO} ${GRPHQL_A} -lpthread ${NOTH_A} -Wl,--end-group -o $@
 
 ./hello/hellosample.o: ./hello/hellosample.cpp
 	${CXX} ${CFLAGS} ${CSTAND} -c $< -o $@
