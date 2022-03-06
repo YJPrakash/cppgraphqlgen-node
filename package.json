@@ -1,0 +1,12 @@
+{
+  "name": "cppgraphql",
+  "version": "1.0.0",
+  "description": ">OS: Ubuntu 20.04.3 LTS > >Arch: amd64 > >cppgraphqlgen: 3.6.0 > >GNU Compiler: GCC 10.3.0 >",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

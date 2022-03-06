@@ -1,0 +1,52 @@
+# Compiled Object files
+*.slo
+*.lo
+
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Cgi Executables
+*.cgi
+
+#Bison and Flex
+*.yy.tab.c
+*.yy.tab.h
+*.yy.c
+
+#PP_Force close exe
+PP_forceClose
+Editor/getPriceBySecurity
+
+#pp-forceclose
+node_modules
+*.txt
+**/package-lock.json
+
+#node-addon-api
+*.log
+build
+*.node

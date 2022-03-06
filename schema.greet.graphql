@@ -1,0 +1,8 @@
+type Query {
+    greetmsg: String
+    hello: Hello
+}
+
+type Hello {
+    greet: String
+}
