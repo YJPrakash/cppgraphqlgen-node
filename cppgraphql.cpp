@@ -1,5 +1,7 @@
 #include <napi.h>
-#include "./hello/HelloMock.h"
+// #include "./hello/HelloMock.h"
+#include "./greet/GreetMock.h"
+// #include "./friend/FriendMock.h"
 
 #include "graphqlservice/JSONResponse.h"
 #include <cstdio>
@@ -20,14 +22,19 @@ std::string APP_DIR;
 std::string HTM_DIR;
 bool fstatus;
 
-static std::shared_ptr<hello::Operations> serviceSingleton;
+static std::shared_ptr<greet::Operations> serviceSingleton;
 
 void startService(const Napi::CallbackInfo &info)
 {
     // Napi::Env env = info.Env();
 
-    auto query = std::make_shared<hello::Query>(response::StringType("Hello World!"));
-    serviceSingleton = std::make_shared<hello::Operations>(query);
+    auto query = std::make_shared<greet::Query>(
+        response::StringType("Hello World!"),
+        []() -> std::vector<std::shared_ptr<greet::Hello>>{
+            return {std::make_shared<greet::Hello>("Hello World from Constructor")};
+        }
+    );
+    serviceSingleton = std::make_shared<greet::Operations>(query);
     std::cerr << "service started..." << std::endl;
 }
 

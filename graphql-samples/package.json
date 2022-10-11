@@ -1,7 +1,7 @@
 {
-  "name": "cppgraphql",
+  "name": "graphql-samples",
   "version": "1.0.0",
-  "description": ">OS: Ubuntu 20.04.3 LTS > >Arch: amd64 > >cppgraphqlgen: 3.6.0 > >GNU Compiler: GCC 10.3.0 >",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prism/controller": "file:../controller"
+    "express": "^4.18.1",
+    "express-graphql": "^0.12.0",
+    "graphql": "^16.6.0"
   }
 }

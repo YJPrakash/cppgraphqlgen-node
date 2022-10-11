@@ -1,0 +1,10 @@
+query {
+    friend(cname:"SG002") {
+        cname
+        isFriend
+    }
+    friends {
+        cname
+        isFriend
+    }
+}
