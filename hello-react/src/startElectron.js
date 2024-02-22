@@ -10,7 +10,7 @@ let mainWindow;
 
 function createWindow () {
   // Create the browser window.
-  const preloadPath = path.join(app.getAppPath(), '../public/preload.js');
+  const preloadPath = path.join(app.getAppPath(), './public/preload.js');
   const targetUrl = isDev ? 'http://localhost:3001/' : path.join(app.getAppPath(), './build/index.html');
 
   console.log(`Preload path: ${preloadPath}`);

@@ -26,6 +26,7 @@ DEFS := \
 
 # Flags passed to all source files.
 GYP_CFLAGS := \
+	-fpermissive \
 	-frtti \
 	-fexceptions \
 	-pthread \
@@ -37,12 +38,12 @@ GYP_CFLAGS := \
 # Flags passed to only C files.
 CFLAGS_C :=
 
-# Flags passed to only C++ files.
+# Flags passed to only  C++ files.
 CFLAGS_CC := \
 	-std=gnu++1y \
 	-fexceptions
 
-INC_NAPI := -I/usr/include/node-addon-api
+INC_NAPI := -I./node_modules/node-addon-api
 INC_NODE := -I/usr/include/node
 INC_NAN := -I/usr/include/nan
 
@@ -85,13 +86,13 @@ clean:
 	rm -rf ${GREET}/*.o ${GREET}/*.node
 
 ./hello/hello.o: ./hello/hello.cpp
-	${CXX} ${CFLAGS} ${CSTAND} '-DNODE_GYP_MODULE_NAME=hello' ${DEFS} ${GYP_CFLAGS} ${INC_NAPI} ${INC_NODE} -c $< -o $@
+	${CXX} ${CFLAGS} ${CSTAND} ${INC_GRPSRVCE} '-DNODE_GYP_MODULE_NAME=hello' ${DEFS} ${GYP_CFLAGS} ${INC_NAPI} ${INC_NODE} -c $< -o $@
 
 ./greet/greet.o: ./greet/greet.cpp
-	${CXX} ${CFLAGS} ${CSTAND} '-DNODE_GYP_MODULE_NAME=greet' ${DEFS} ${GYP_CFLAGS} ${INC_NAPI} ${INC_NODE} -c $< -o $@
+	${CXX} ${CFLAGS} ${CSTAND} ${INC_GRPSRVCE} '-DNODE_GYP_MODULE_NAME=greet' ${DEFS} ${GYP_CFLAGS} ${INC_NAPI} ${INC_NODE} -c $< -o $@
 
 cppgraphql.o: cppgraphql.cpp
-	${CXX} ${CFLAGS} ${CSTAND} '-DNODE_GYP_MODULE_NAME=cppgraphql' ${DEFS} ${GYP_CFLAGS} ${INC_NAPI} ${INC_NODE} -c $< -o $@
+	${CXX} ${CFLAGS} ${CSTAND} ${INC_GRPSRVCE} '-DNODE_GYP_MODULE_NAME=cppgraphql' ${DEFS} ${GYP_CFLAGS} ${INC_NAPI} ${INC_NODE} -c $< -o $@
 
 # ./hello/hello.node: ./src/GraphQLService.o ./hello/HelloSchema.o ./hello/HelloMock.o ./hello/hello.o
 # 	${CXX} ${CFLAGS} -shared -pthread -Wl,-soname=hello.node -Wl,--start-group ./src/GraphQLService.o ./hello/HelloSchema.o ./hello/HelloMock.o ./hello/hello.o ${GRPHQL_FPIC} ${NOTH_A} -Wl,--end-group -o $@
@@ -106,25 +107,25 @@ cppgraphql.node: ./cppgraphql.o ${GRPHQL_GREET} ${GRPHQL_A}
 	${CXX} ${CFLAGS} -shared -Wl,-soname=cppgraphql.node -Wl,--start-group cppgraphql.o ${GRPHQL_HELLO} ${GRPHQL_A} -lpthread ${NOTH_A} -Wl,--end-group -o $@
 
 ./hello/hellosample.o: ./hello/hellosample.cpp
-	${CXX} ${CFLAGS} ${CSTAND} -c $< -o $@
+	${CXX} ${CFLAGS} ${CSTAND} ${INC_GRPSRVCE} -c $< -o $@
 
 # ./hello/hellosample.node:
 # 	${CXX} -std=gnu++17 -shared -pthread -Wl,-soname=hellosample -Wl,--start-group ./hello/HelloSchema.o ./hello/HelloMock.o ./hello/hellosample.o -lpthread ${LD_GRPHQL} -Wl,--end-group -o $@
 ./greet/greetsample.o: ./greet/greetsample.cpp
-	${CXX} ${CFLAGS} ${CSTAND} -c $< -o $@
+	${CXX} ${CFLAGS} ${CSTAND} ${INC_GRPSRVCE} -c $< -o $@
 
 ./friend/friendsample.o: ./friend/friendsample.cpp
-	${CXX} ${CFLAGS} ${CSTAND} -c $< -o $@
+	${CXX} ${CFLAGS} ${CSTAND} ${INC_GRPSRVCE} -c $< -o $@
 
 ./hello/hellosample.node: ./hello/hellosample.o ${GRPHQL_HELLO}
 	${CXX} ${CFLAGS} ./hello/hellosample.o -o $@ ${GRPHQL_HELLO} ${LD_GRPHQL} -lpthread 
 
 
 ./hello/HelloSchema.o: ./hello/HelloSchema.cpp
-	${CXX} ${CFLAGS} ${CSTAND} -c $< -o $@
+	${CXX} ${CFLAGS} ${CSTAND} ${INC_GRPSRVCE} -c $< -o $@
 
 ./hello/HelloMock.o: ./hello/HelloMock.cpp
-	${CXX} ${CFLAGS} ${CSTAND} -c $< -o $@
+	${CXX} ${CFLAGS} ${CSTAND} ${INC_GRPSRVCE} -c $< -o $@
 
 libhellographql.a: ./hello/HelloMock.o
 	ar qc libhellographql.a  ./hello/HelloMock.o
@@ -138,10 +139,10 @@ libhelloschema.a: ./hello/HelloSchema.o
 	${CXX} ${CFLAGS} ./greet/greetsample.o -o $@ ${GRPHQL_GREET} ${LD_GRPHQL} -lpthread 
 
 ./greet/GreetSchema.o: ./greet/GreetSchema.cpp
-	${CXX} ${CFLAGS} ${CSTAND} -c $< -o $@
+	${CXX} ${CFLAGS} ${CSTAND} ${INC_GRPSRVCE} -c $< -o $@
 
 ./greet/GreetMock.o: ./greet/GreetMock.cpp
-	${CXX} ${CFLAGS} ${CSTAND} -c $< -o $@
+	${CXX} ${CFLAGS} ${CSTAND} ${INC_GRPSRVCE} -c $< -o $@
 
 libgreetgraphql.a: ./greet/GreetMock.o
 	ar qc libgreetgraphql.a  ./greet/GreetMock.o
