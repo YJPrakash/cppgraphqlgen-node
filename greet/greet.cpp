@@ -58,10 +58,10 @@ struct SubscriptionPayloadQueue : std::enable_shared_from_this<SubscriptionPaylo
         lock.unlock();
         condition.notify_one();
 
-        if (deferUnsubscribe && serviceSingleton)
-        {
-            serviceSingleton->unsubscribe(*deferUnsubscribe);
-        }
+        // if (deferUnsubscribe && serviceSingleton)
+        // {
+        //     serviceSingleton->unsubscribe(*deferUnsubscribe);
+        // }
     }
 
     std::mutex mutex;
@@ -236,7 +236,7 @@ Napi::Value fetchQuery(const Napi::CallbackInfo &info)
             throw std::runtime_error("The service is not started!");
         }
 
-        _response = response::toJSON(serviceSingleton->resolve(nullptr, _ast, "", response::Value(response::Type::Map)).get());
+        _response = response::toJSON(serviceSingleton->resolve({_ast, "", response::Value(response::Type::Map)}).get());
     }
     catch (const std::exception &ex)
     {

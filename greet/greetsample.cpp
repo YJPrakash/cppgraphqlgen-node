@@ -46,10 +46,10 @@ int main(int argc, char **argv)
         std::cout << "Executing query..." << std::endl;
 
         std::cout << response::toJSON(service
-                    ->resolve(nullptr,
+                    ->resolve({
                             query,
                             ((argc > 2) ? argv[2] : ""),
-                            response::Value(response::Type::Map))
+                            response::Value(response::Type::Map)})
                     .get())
                   << std::endl;
     }

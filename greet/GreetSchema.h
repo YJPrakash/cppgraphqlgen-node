@@ -9,6 +9,7 @@
 #define GREETSCHEMA_H
 
 #include "graphqlservice/internal/Schema.h"
+#include "graphqlservice/GraphQLService.h"
 
 // Check if the library version is compatible with schemagen 3.6.0
 static_assert(graphql::internal::MajorVersion == 3, "regenerate with schemagen: major version mismatch");
