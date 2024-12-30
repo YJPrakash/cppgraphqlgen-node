@@ -24,6 +24,9 @@
       "libraries": [
         "-lgraphqlservice",
         "-lgraphqlresponse",
+        "-lgraphqljson",
+        "-lgraphqlintrospection",
+        "-lgraphqlpeg",
         "-lpthread",
         "-ldl"
       ],

@@ -4,7 +4,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "install": "node-gyp rebuild"
+    "install": "node-gyp rebuild",
+    "rebuild": "node-gyp rebuild",
+    "build": "node-gyp build"
   },
   "keywords": [],
   "author": "",

@@ -1,12 +1,14 @@
 const addon = require('./build/Release/greet.node');
 
 addon.startService();
-console.log(addon.fetchQuery(`
+let result = addon.fetchQuery(`
 { 
     hello {
         greet
     }
     greetmsg 
 }
-`), '', '')
+`, '', '');
+result = JSON.parse(result)
+console.log(result.data);
 addon.stopService();
