@@ -58,10 +58,10 @@ struct SubscriptionPayloadQueue : std::enable_shared_from_this<SubscriptionPaylo
         lock.unlock();
         condition.notify_one();
 
-        // if (deferUnsubscribe && serviceSingleton)
-        // {
-        //     serviceSingleton->unsubscribe(*deferUnsubscribe);
-        // }
+        if (deferUnsubscribe && serviceSingleton)
+        {
+            serviceSingleton->unsubscribe(*deferUnsubscribe);
+        }
     }
 
     std::mutex mutex;
