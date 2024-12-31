@@ -239,10 +239,10 @@ Napi::Value fetchQuery(const Napi::CallbackInfo &info)
         // _response = response::toJSON(serviceSingleton->resolve({_ast, "", response::Value(response::Type::Map)}).get());
         _response = response::toJSON(serviceSingleton->resolve(nullptr, _ast, "", response::Value(response::Type::Map)).get());
     }
-    catch (const std::exception &ex)
-    {
-        std::cerr << "Caught exception preparing the query: " << ex.what() << std::endl;
-    }
+    // catch (const std::exception &ex)
+    // {
+    //     std::cerr << "Caught exception preparing the query: " << ex.what() << std::endl;
+    // }
     catch (service::schema_exception &scx)
     {
         response::Value document(response::Type::Map);
@@ -263,11 +263,55 @@ Napi::Value fetchQuery(const Napi::CallbackInfo &info)
     return Napi::String::New(env, _response);
 }
 
+// Napi::Value GetSchemaSDL(const Napi::CallbackInfo &info)
+// {
+//     Napi::Env env = info.Env();
+
+//     auto schema = greet::GetSchema();
+
+//     std::ostringstream sdl;
+
+//     // Example: Iterate through schema types and their fields
+//     for (const auto &type : schema->types())
+//     {
+//         // if (type.IsBuiltin())
+//         //     continue; // Skip built-in types
+
+//         sdl << "type " << type.first << " {\n";
+
+//         for (const auto &field : type.second->fields())
+//         {
+//             sdl << "  " << field->name() << ": " << field->type().lock().get()->name() << "\n";
+//         }
+//         sdl << "}\n";
+//     }
+
+//     // Add directives, queries, mutations, etc., as needed
+//     if (auto queryType = schema->queryType())
+//     {
+//         sdl << "schema {\n  query: " << queryType->name() << "\n}\n";
+//     }
+
+//     return Napi::String::New(env, sdl.str());
+// }
+
+Napi::Value GetSchemaSDL(const Napi::CallbackInfo &info)
+{
+    Napi::Env env = info.Env();
+
+    // Get the schema
+    auto schema = greet::GetSchema();
+
+    // Return the raw pointer or serialized representation
+    return Napi::External<schema::Schema>::New(env, schema.get());
+}
+
 Napi::Object Init(Napi::Env env, Napi::Object exports)
 {
     exports.Set("startService", Napi::Function::New(env, startService));
     exports.Set("stopService", Napi::Function::New(env, stopService));
     exports.Set("fetchQuery", Napi::Function::New(env, fetchQuery));
+    exports.Set("getSchema", Napi::Function::New(env, GetSchemaSDL));
     return exports;
 }
 

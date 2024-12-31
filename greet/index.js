@@ -1,6 +1,9 @@
 const addon = require('./build/Release/greet.node');
 
-addon.startService();
+addon.startService()
+const cppSchema = addon.getSchema();
+console.log(cppSchema);
+
 let result = addon.fetchQuery(`
 { 
     hello {
@@ -11,4 +14,5 @@ let result = addon.fetchQuery(`
 `, '', '');
 result = JSON.parse(result)
 console.log(result.data);
+
 addon.stopService();

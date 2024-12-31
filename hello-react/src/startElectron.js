@@ -48,7 +48,7 @@ app.on('ready', createWindow);
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
   // const cppgraphql = require('electron-cppgraphql/build/Debug/electron-cppgraphql.node');
-  const cppgraphql = require('../../hello/hello.node');
+  const cppgraphql = require('../../hello/build/Release/hello.node');
 
   cppgraphql.stopService();
 
