@@ -1,8 +1,10 @@
 const addon = require('./build/Release/greet.node');
-
-addon.startService()
-const cppSchema = addon.getSchema();
-console.log(cppSchema);
+const { buildSchema, GraphQLSchema } = require('graphql');
+// console.log(addon.startService());
+const cppSchema = addon.startService();
+// console.log(cppSchema);
+const schema = new GraphQLSchema(cppSchema);
+// console.log(schema);
 
 let result = addon.fetchQuery(`
 { 

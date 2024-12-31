@@ -19,9 +19,9 @@ using namespace graphql;
 static std::shared_ptr<greet::Operations> serviceSingleton;
 static std::shared_ptr<greet::Hello> hello;
 
-void startService(const Napi::CallbackInfo &info)
+Napi::Value startService(const Napi::CallbackInfo &info)
 {
-    // Napi::Env env = info.Env();
+    Napi::Env env = info.Env();
     // auto query = std::make_shared<greet::Query>(response::StringType("Hello World!"));
     hello = std::make_shared<greet::Hello>("Hello World!");
     auto query = std::make_shared<greet::Query>(
@@ -32,6 +32,7 @@ void startService(const Napi::CallbackInfo &info)
 
     serviceSingleton = std::make_shared<greet::Operations>(query);
     std::cerr << "Created the service..." << std::endl;
+    return Napi::External<greet::Operations>::New(env, serviceSingleton.get());
 }
 
 struct SubscriptionPayloadQueue : std::enable_shared_from_this<SubscriptionPayloadQueue>

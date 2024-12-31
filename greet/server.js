@@ -10,11 +10,11 @@ const addon = require("./build/Release/greet.node");
 // const schema = fs.readFileSync(path.resolve( __dirname, '../schema.greet.graphql')).toString();
 // const schema = buildSchema(addon.getSchema());
 
-addon.startService();
+// addon.startService();
 
-const {getSchema} = addon;
+// const {getSchema} = addon;
 
-const cppSchema = getSchema() 
+const cppSchema = addon.startService();
 
 const schema = new GraphQLSchema(cppSchema);
 
