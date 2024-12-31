@@ -15,10 +15,8 @@ addon.startService();
 const {getSchema} = addon;
 
 const cppSchema = getSchema() 
-console.log(module);
 
 const schema = new GraphQLSchema(cppSchema);
-// console.log(schema);
 
 // Define a custom resolver
 const customResolver = ({ query, variables, operationName }) => {
