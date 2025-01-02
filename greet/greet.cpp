@@ -19,9 +19,9 @@ using namespace graphql;
 static std::shared_ptr<greet::Operations> serviceSingleton;
 static std::shared_ptr<greet::Hello> hello;
 
-Napi::Value startService(const Napi::CallbackInfo &info)
+void startService(const Napi::CallbackInfo &info)
 {
-    Napi::Env env = info.Env();
+    // Napi::Env env = info.Env();
     // auto query = std::make_shared<greet::Query>(response::StringType("Hello World!"));
     hello = std::make_shared<greet::Hello>("Hello World!");
     auto query = std::make_shared<greet::Query>(
@@ -32,7 +32,7 @@ Napi::Value startService(const Napi::CallbackInfo &info)
 
     serviceSingleton = std::make_shared<greet::Operations>(query);
     std::cerr << "Created the service..." << std::endl;
-    return Napi::External<greet::Operations>::New(env, serviceSingleton.get());
+    // return Napi::External<greet::Operations>::New(env, serviceSingleton.get());
 }
 
 struct SubscriptionPayloadQueue : std::enable_shared_from_this<SubscriptionPayloadQueue>
@@ -264,39 +264,43 @@ Napi::Value fetchQuery(const Napi::CallbackInfo &info)
     return Napi::String::New(env, _response);
 }
 
-// Napi::Value GetSchemaSDL(const Napi::CallbackInfo &info)
-// {
-//     Napi::Env env = info.Env();
-
-//     auto schema = greet::GetSchema();
-
-//     std::ostringstream sdl;
-
-//     // Example: Iterate through schema types and their fields
-//     for (const auto &type : schema->types())
-//     {
-//         // if (type.IsBuiltin())
-//         //     continue; // Skip built-in types
-
-//         sdl << "type " << type.first << " {\n";
-
-//         for (const auto &field : type.second->fields())
-//         {
-//             sdl << "  " << field->name() << ": " << field->type().lock().get()->name() << "\n";
-//         }
-//         sdl << "}\n";
-//     }
-
-//     // Add directives, queries, mutations, etc., as needed
-//     if (auto queryType = schema->queryType())
-//     {
-//         sdl << "schema {\n  query: " << queryType->name() << "\n}\n";
-//     }
-
-//     return Napi::String::New(env, sdl.str());
-// }
-
 Napi::Value GetSchemaSDL(const Napi::CallbackInfo &info)
+{
+    Napi::Env env = info.Env();
+
+    auto schema = greet::GetSchema();
+
+    std::ostringstream sdl;
+
+    // Example: Iterate through schema types and their fields
+    for (const auto &type : schema->types())
+    {
+        // if (type.IsBuiltin())
+        //     continue; // Skip built-in types
+
+        sdl << "type " << type.first << " {\n";
+
+        for (const auto &field : type.second->fields())
+        {
+            auto typeName = field->type().lock().get()->name();
+            // if(typeName == "") {
+            //     typeName = "String";
+            // }
+            sdl << "  " << field->name() << ": " << typeName << "\n";
+        }
+        sdl << "}\n";
+    }
+
+    // Add directives, queries, mutations, etc., as needed
+    if (auto queryType = schema->queryType())
+    {
+        sdl << "schema {\n  query: " << queryType->name() << "\n}\n";
+    }
+
+    return Napi::String::New(env, sdl.str());
+}
+
+Napi::Value GetSchema(const Napi::CallbackInfo &info)
 {
     Napi::Env env = info.Env();
 
@@ -312,7 +316,8 @@ Napi::Object Init(Napi::Env env, Napi::Object exports)
     exports.Set("startService", Napi::Function::New(env, startService));
     exports.Set("stopService", Napi::Function::New(env, stopService));
     exports.Set("fetchQuery", Napi::Function::New(env, fetchQuery));
-    exports.Set("getSchema", Napi::Function::New(env, GetSchemaSDL));
+    exports.Set("getSchema", Napi::Function::New(env, GetSchema));
+    exports.Set("getSchemaSDL", Napi::Function::New(env, GetSchemaSDL));
     return exports;
 }
 
