@@ -1,8 +1,23 @@
-import GraphiQL from 'graphiql';
+// import React from 'react';
+// import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
+
+import {GraphiQL} from 'graphiql';
 import 'graphiql/graphiql.css';
-import React from 'react';
-import ReactDOM from 'react-dom';
+// import { createGraphiQLFetcher } from '@graphiql/toolkit';
+// import '@graphiql/react/css/index.css';
+
 import './index.css';
+
+// const fetcher = createGraphiQLFetcher({
+//   url: 'http://localhost:4000/graphql', // Update with your endpoint
+//   subscriptionUrl: 'ws://localhost:4000/graphql', // Update with your WebSocket endpoint
+// });
+
+// ReactDOM.render(
+//   <GraphiQL fetcher={fetcher} />,
+//   document.getElementById('root')
+// );
 
 window.cppgraphql.startService();
 
@@ -25,4 +40,8 @@ function fetchQuery (params) {
   //   .then(response => JSON.parse(response));
 }
 
-ReactDOM.render(<GraphiQL fetcher={fetchQuery} />, document.getElementById('root'));
+// ReactDOM.render(<GraphiQL fetcher={fetchQuery} />, document.getElementById('root'));
+
+const root = createRoot(document.getElementById('root'));
+root.render(<GraphiQL fetcher={fetchQuery} />);
+

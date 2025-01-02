@@ -10,20 +10,20 @@ let mainWindow;
 
 function createWindow () {
   // Create the browser window.
-  const preloadPath = path.join(app.getAppPath(), '../public/preload.js');
+  const preloadPath = path.join(app.getAppPath(), './public/preload.js');
   const targetUrl = isDev ? 'http://localhost:3001/' : path.join(app.getAppPath(), './build/index.html');
 
   console.log(`Preload path: ${preloadPath}`);
   console.log(`Target URL: ${targetUrl}`);
 
   // mainWindow = new BrowserWindow({ width: 800, height: 600, webPreferences: { preload: preloadPath } });
-  mainWindow = new BrowserWindow({ 
-    width: 1600, 
-    height: 900, 
+  mainWindow = new BrowserWindow({
+    width: 1600,
+    height: 900,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-      preload: preloadPath 
+      preload: preloadPath
     }
   });
   mainWindow.loadURL(targetUrl);
@@ -48,7 +48,7 @@ app.on('ready', createWindow);
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
   // const cppgraphql = require('electron-cppgraphql/build/Debug/electron-cppgraphql.node');
-  const cppgraphql = require('../../hello/build/Release/hello.node');
+  const cppgraphql = require('../../greet/build/Release/greet.node');
 
   cppgraphql.stopService();
 

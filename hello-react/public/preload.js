@@ -1,3 +1,3 @@
 // const electron = require('electron');
 
-window.cppgraphql = require('../../hello/hello.node');
+window.cppgraphql = require('../../greet/build/Release/greet.node');

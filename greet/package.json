@@ -6,7 +6,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "install": "node-gyp rebuild",
     "rebuild": "node-gyp rebuild",
-    "build": "node-gyp build"
+    "build": "node-gyp build",
+    "electron": "electron index.js --no-sandbox --headless",
+    "electron:server": "electron server.js --no-sandbox --headless"
   },
   "keywords": [],
   "author": "",
@@ -14,12 +16,14 @@
   "gypfile": true,
   "description": "",
   "devDependencies": {
+    "electron": "^33.2.1",
     "express": "^4.21.2",
-    "graphql": "^16.10.0",
     "node-addon-api": "^8.3.0",
     "node-gyp": "^11.0.0"
   },
   "dependencies": {
+    "graphiql": "^3.8.3",
+    "graphql": "^16.10.0",
     "graphql-http": "^1.22.3",
     "ruru": "^2.0.0-beta.17"
   }
